@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "new project started",
+  "keywords": [
+    "video",
+    "playbacks",
+    "comments"
+  ],
+  "license": "ISC",
+  "author": "Adi",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
