@@ -7,13 +7,13 @@ import { ApiResponse } from "../utils/ApiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 
 const getChannelStats = asyncHandler(async (req, res) => {
-    // TODO: Get the channel stats like total video views, total subscribers, total videos, total likes etc.
     // 1. Get channelId from params (or fallback to authenticated user ID)
     const channelId = req.params?.channelId || req.user?._id
     if (!channelId || !isValidObjectId(channelId)) {
         throw new ApiError(400, "Invalid or missing channel ID")
     }
     const channelObjectId = new mongoose.Types.ObjectId(channelId)
+
     // 2. Fetch subscribers, video stats (videos & views), and video IDs in parallel
     const [subscriberCount, videoStats, videoIds] = await Promise.all([
         Subscription.countDocuments({
@@ -41,7 +41,6 @@ const getChannelStats = asyncHandler(async (req, res) => {
     const totalVideos = videoStats[0]?.totalVideos || 0
     const totalViews = videoStats[0]?.totalViews || 0
 
-
     // 4. Calculate total likes across all videos
     let totalLikes = 0
     if (videoIds.length > 0) {
@@ -63,8 +62,7 @@ const getChannelStats = asyncHandler(async (req, res) => {
 })
 
 const getChannelVideos = asyncHandler(async (req, res) => {
-    // TODO: Get all the videos uploaded by the channel
-    const { channelId } = req.params
+    const channelId = req.params?.channelId || req.user?._id
     if (!channelId || !isValidObjectId(channelId)) {
         throw new ApiError(400, "Invalid channel ID")
     }
